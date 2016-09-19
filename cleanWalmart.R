@@ -83,13 +83,13 @@ waterMap <- get_map(location = bbox, zoom = 4, maptype = "watercolor") # Had to 
 ## Map Building ##
 ##################
 ## All Locations
-pdf("Output/allWM.pdf")
-WMmap <- waterMap
-WMmap <- ggmap(WMmap)
-WMmap <- WMmap + geom_point(aes(long, lat), data = wmData, color = "blue")
-WMmap <- WMmap + ggtitle("All Walmart Locations Between 1962 and 2006")
-WMmap
-dev.off()
+# pdf("Output/allWM.pdf")
+# WMmap <- waterMap
+# WMmap <- ggmap(WMmap)
+# WMmap <- WMmap + geom_point(aes(long, lat), data = wmData, color = "blue")
+# WMmap <- WMmap + ggtitle("All Walmart Locations Between 1962 and 2006")
+# WMmap
+# dev.off()
 
 ## 1962 - 1970
 pdf("Output/WM1970.pdf")
