@@ -38,7 +38,7 @@ wmData$id <- 1:nrow(wmData)
 rm(name, year, lat, long)
 
 ## Bring in US Spatial Data to df
-states <- spTransform(readOGR(dsn = "USAshp", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), CRS("+proj=longlat +datum=WGS84"))
+states <- spTransform(readOGR(dsn = "shapefiles", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), CRS("+proj=longlat +datum=WGS84"))
 statesdf <- states@data # Bring slotted data into dataframe
 statesdf <- statesdf[order(statesdf$DRAWSEQ),] # order ID, low to high
 statesdf <- filter(statesdf, STATE_ABBR != "HI" & STATE_ABBR != "AK")  # Remove states out of bounds
@@ -47,8 +47,6 @@ statesFortified <- fortify(states, region = "DRAWSEQ")
 statesFortified <- statesFortified[order(as.numeric(statesFortified$id)),]
 USAmain <- inner_join(statesdf, statesFortified, by = c("DRAWSEQ" = "id"))
 rm(states, statesdf, statesFortified)
-
-
 
 
 ######################
