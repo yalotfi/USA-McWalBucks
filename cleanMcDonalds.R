@@ -5,7 +5,7 @@ source("sourcePackages.R")
 ## McDonald's Data Mngmt ##
 ###########################
 ## Set up data for cleaning
-mcd <- read.csv2("Data/McDonalds_USA_CAN.csv", header = FALSE, sep = ",")  # Bring in the raw data
+mcd <- read.csv2("data/McDonalds_USA_CAN.csv", header = FALSE, sep = ",")  # Bring in the raw data
 names(mcd) <- c("long", "lat", "type", "address")  # Rename columns
 mcd$type <- as.character(mcd$type)  # column to apply regex must be character
 
