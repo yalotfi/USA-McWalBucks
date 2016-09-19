@@ -1,7 +1,7 @@
 ###################
 ## Data Cleaning ##
 ###################
-starbucks <- read.csv("Data/Starbucks.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE)
+starbucks <- read.csv("data/Starbucks.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE)
 names(starbucks) <- c("long", "lat", "storename", "address")
 starbucks$id <- 1:nrow(starbucks)
 
