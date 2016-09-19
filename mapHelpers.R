@@ -12,10 +12,10 @@ ggtitle_subtitle = function(title, subtitle = "") {
   
 }
 
-## Black and White Theme Map
+## Black Theme Map
 fontCheck <- names(pdfFonts())
 
-BWtheme = function(base_size = 12) {
+BlackTheme = function(base_size = 24) {
   
   theme_bw(base_size) +
     theme(text = element_text(color = "#ffffff"),
@@ -30,3 +30,4 @@ BWtheme = function(base_size = 12) {
           axis.ticks = element_blank())
   
 }
+
