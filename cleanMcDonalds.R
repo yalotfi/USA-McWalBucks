@@ -46,7 +46,7 @@ mcd$type <- as.factor(mcd$type)
 # address, city, and phone number remain as chr strings
 
 ## USA Shapefiles
-states <- spTransform(readOGR(dsn = "USAshp", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), CRS("+proj=longlat +datum=WGS84"))
+states <- spTransform(readOGR(dsn = "shapefiles", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), CRS("+proj=longlat +datum=WGS84"))
 statesdf <- states@data # Bring slotted data into dataframe
 statesdf <- statesdf[order(statesdf$DRAWSEQ),] # order ID, low to high
 statesdf$DRAWSEQ <- as.character(statesdf$DRAWSEQ) # join columns must have same variable type, convert to string
