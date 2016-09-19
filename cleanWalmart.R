@@ -4,7 +4,7 @@ source("sourcePackages.R")
 ## Parse Walmart Data ##
 ########################
 ## Bring Data and Make Helper
-wmData <- readLines("Data/walmarts.xml") # view raw data to see variables
+wmData <- readLines("data/walmarts.xml") # view raw data to see variables
 strsplits <- function(x, splits, ...) {   # Rewrite strsplit() function
   for (split in splits) {
     x <- unlist(strsplit(x, split, ...))
