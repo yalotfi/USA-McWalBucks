@@ -1,28 +1,11 @@
 
-rm(list = ls())
-
-##############
-## Packages ##
-##############
-## Basic Packages
-library(ggplot2)
-library(ggmap)
-library(dplyr)
-
-## GIS Packages
-library(raster)
-library(rgdal)
-library(rgeos)
-library(ggmap)
-library(sp)
-library(maptools)
-
+source("sourcePackages.R")
 
 ###########################
 ## McDonald's Data Mngmt ##
 ###########################
 ## Set up data for cleaning
-mcd <- read.csv2("McDonalds_USA_CAN.csv", header = FALSE, sep = ",")  # Bring in the raw data
+mcd <- read.csv2("Data/McDonalds_USA_CAN.csv", header = FALSE, sep = ",")  # Bring in the raw data
 names(mcd) <- c("long", "lat", "type", "address")  # Rename columns
 mcd$type <- as.character(mcd$type)  # column to apply regex must be character
 
@@ -112,70 +95,15 @@ mcdUSmain <- filter(mcdUS, state != "HI" & state != "AK")
 rm(mcd, mcdUS)
 
 ## Add ID column and Data Type fix
-mcdUSmain$id <- 1:nrow(mcdUSmain)
+mcdUSmain$id    <- 1:nrow(mcdUSmain)
 mcdUSmain$state <- as.factor(mcdUSmain$state)
-mcdCAN$id <- 1:nrow(mcdCAN)
+
+mcdCAN$id   <- 1:nrow(mcdCAN)
 mcdCAN$city <- as.factor(mcdCAN$city)
-mcdHawaii$id <- 1:nrow(mcdHawaii)
+
+mcdHawaii$id   <- 1:nrow(mcdHawaii)
 mcdHawaii$city <- as.factor(mcdHawaii$city)
-mcdAlaska$id <- 1:nrow(mcdAlaska)
+
+mcdAlaska$id   <- 1:nrow(mcdAlaska)
 mcdAlaska$city <- as.factor(mcdAlaska$city)
-
-
-#############
-## Mapping ##
-#############
-## Basic tools
-bbox <- c(-130,25, -65, 50) # Set Bounding Box Limits for mainland USA
-waterMap <- get_map(location = bbox, zoom = 4, maptype = "watercolor") # Had to work without Internet connection
-
-McMap <- waterMap
-McMap <- ggmap(McMap)
-McMap <- McMap + geom_point(aes(long, lat), data = mcdUSmain, color = "orangered4")
-McMap <- McMap + ggtitle("McDonalds Location Across the USA")
-McMap <- McMap + BWtheme(base_size = 24)
-ggsave("Output/McMap.png", McMap)
-
-## Help with nicer map
-alpha_range = c(0.14, 0.75)
-size_range = c(0.134, 0.173)
-
-## Create a title with subtitle in ggplot/ggmap
-ggtitle_subtitle = function(title, subtitle = "") {
-  
-  ggtitle(bquote(atop(bold(.(title)), atop(.(subtitle)))))
-  
-}
-
-## Black Theme Map
-fontCheck <- names(pdfFonts())
-
-BlackTheme = function(base_size = 24) {
-  
-  theme_bw(base_size) +
-    theme(text = element_text(color = "#ffffff"),
-          rect = element_rect(fill = "#000000", color = "#000000"),
-          plot.background = element_rect(fill = "#000000", color = "#000000"),
-          panel.background = element_rect(fill = "#000000", color = "#000000"),
-          plot.title = element_text(),
-          panel.grid = element_blank(),
-          panel.border = element_blank(),
-          axis.text = element_blank(),
-          axis.title = element_blank(),
-          axis.ticks = element_blank())
-  
-}
-
-# Mainland USA
-McUS <- ggplot()
-McUS <- McUS + geom_polygon(data = USAmain, aes(x = long, y = lat, group = group), fill = "#080808", color = "#080808")
-McUS <- McUS + geom_point(data = mcdUSmain, aes(x = long, y = lat, alpha = id, size = id), color = "gold")
-McUS <- McUS + scale_alpha_continuous(range  = alpha_range, trans = "log", limits = range(mcdUSmain$id))
-McUS <- McUS + scale_size_continuous(range  = size_range, trans = "log", limits = range(mcdUSmain$id))
-McUS <- McUS + coord_map(xlim = range(mcdUSmain$long), ylim = range(mcdUSmain$lat))
-McUS <- McUS + ggtitle_subtitle("McMerica", "14,000 McDonalds Locations in the USA")  # Problem with fonts
-McUS <- McUS + BWtheme(base_size = 24)
-McUS <- McUS + theme(legend.position = "none")
-ggsave("Output/McMerica.png", McUS)
-
 
