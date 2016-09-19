@@ -6,7 +6,7 @@ names(starbucks) <- c("long", "lat", "storename", "address")
 starbucks$id <- 1:nrow(starbucks)
 
 ## USA Shapefiles
-states <- spTransform(readOGR(dsn = "USAshp", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), 
+states <- spTransform(readOGR(dsn = "shapefiles", layer = "states", stringsAsFactors = FALSE, verbose = FALSE), 
                       CRS("+proj=longlat +datum=WGS84"))
 
 statesdf <- states@data # Bring slotted data into dataframe
